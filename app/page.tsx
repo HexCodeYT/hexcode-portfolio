@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { services } from "@/lib/services";
+import Image from "next/image";
 
 type ServiceStatus = {
   name: string;
@@ -34,17 +35,19 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <section className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-24">
         <div className="mb-8 flex items-center gap-4">
-          <div className="h-14 w-14 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
-            <img
+          <div className="h-14 w-14 overflow-hidden rounded-2xl borderborder-neutral-700 shadow-2xl bg-neutral-900">
+            <Image
               src="/pfp.jpg"
               alt="HexCode"
+              width={56}
+              height={56}
               className="h-full w-full object-cover"
             />
           </div>
 
           <div>
             <p className="text-lg font-medium text-white">
-              Pawan Sedara
+              Pawan Sedara 🇦🇺
             </p>
 
             <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">
