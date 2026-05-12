@@ -80,6 +80,14 @@ export default function Home() {
           >
             Contact
           </a>
+
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            className="rounded-full border border-neutral-800 px-5 py-3 text-sm font-medium text-white transition hover:border-neutral-600"
+          >
+            Resume
+          </a>
         </div>
 
         <div className="mt-16 grid gap-4 md:grid-cols-2">
@@ -283,7 +291,7 @@ export default function Home() {
 
             <div className="mt-8 flex flex-wrap gap-4 text-neutral-400">
               <a
-                href="mailto:sandbox-helpers.6q@icloud.com"
+                href="mailto:pawan@hexcode.au"
                 className="transition hover:text-white"
               >
                 Email
