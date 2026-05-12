@@ -236,7 +236,6 @@ export default function Home() {
                   "Debian",
                   "Docker",
                   "WireGuard",
-                  "iptables",
                   "UFW",
                   "Caddy",
                   "Cloudflare",
