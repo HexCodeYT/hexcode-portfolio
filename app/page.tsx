@@ -33,23 +33,34 @@ export default function Home() {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const [liveRes, historyRes] = await Promise.all([
-          fetch("/api/status"),
-          fetch("/api/status/history"),
-        ]);
+        const liveRes = await fetch("/api/status");
 
-        const liveData = await liveRes.json();
-        const uptimeHistoryData = await historyRes.json();
-
-        setStatusData(liveData);
-        setHistoryData(uptimeHistoryData);
+        if (liveRes.ok) {
+          const liveData = await liveRes.json();
+          setStatusData(liveData);
+        }
       } catch (err) {
-        console.error(err);
+        console.error("Live status failed:", err);
+      }
+
+      try {
+        const historyRes = await fetch("/api/status/history");
+
+        if (historyRes.ok) {
+          const uptimeHistoryData = await historyRes.json();
+          setHistoryData(uptimeHistoryData);
+        } else {
+          console.error("History API failed:", historyRes.status);
+        }
+      } catch (err) {
+        console.error("History fetch failed:", err);
       }
     };
 
     fetchStatus();
+
     const interval = setInterval(fetchStatus, 30000);
+
     return () => clearInterval(interval);
   }, []);
 
