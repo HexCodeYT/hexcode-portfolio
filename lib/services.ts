@@ -2,7 +2,7 @@ export const services = [
   {
     name: "SearXNG",
     description: "Public privacy-focused search instance",
-    url: "https://search-public.hexcode.au/",
+    url: "https://search.hexcode.au/",
     stack: ["Docker", "Caddy", "Valkey", "Debian"],
   },
   {

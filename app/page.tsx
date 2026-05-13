@@ -10,15 +10,39 @@ type ServiceStatus = {
   latency: number | null;
 };
 
+type UptimeHistoryDay = {
+  date: string;
+  uptime: number | null;
+  totalChecks: number;
+  onlineChecks: number;
+  avgLatencyMs: number | null;
+  status: "good" | "degraded" | "bad" | "unknown";
+};
+
+type ServiceHistory = {
+  name: string;
+  url: string;
+  trackedDays: number;
+  history: UptimeHistoryDay[];
+};
+
 export default function Home() {
   const [statusData, setStatusData] = useState<ServiceStatus[]>([]);
+  const [historyData, setHistoryData] = useState<ServiceHistory[]>([]);
 
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await fetch("/api/status");
-        const data = await res.json();
-        setStatusData(data);
+        const [liveRes, historyRes] = await Promise.all([
+          fetch("/api/status"),
+          fetch("/api/status/history"),
+        ]);
+
+        const liveData = await liveRes.json();
+        const uptimeHistoryData = await historyRes.json();
+
+        setStatusData(liveData);
+        setHistoryData(uptimeHistoryData);
       } catch (err) {
         console.error(err);
       }
@@ -31,11 +55,31 @@ export default function Home() {
     return statusData.find((item) => item.name === name);
   };
 
+  const getHistory = (name: string) => {
+    return historyData.find((item) => item.name === name);
+  };
+
+  const getBarClass = (status: UptimeHistoryDay["status"]) => {
+    switch (status) {
+      case "good":
+        return "bg-blue-500";
+
+      case "degraded":
+        return "bg-orange-400";
+
+      case "bad":
+        return "bg-red-500";
+
+      default:
+        return "bg-neutral-900";
+    }
+  };
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <section className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-24">
         <div className="mb-8 flex items-center gap-4">
-          <div className="h-14 w-14 overflow-hidden rounded-2xl borderborder-neutral-700 shadow-2xl bg-neutral-900">
+          <div className="h-14 w-14 overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-900 shadow-2xl">
             <Image
               src="/pfp.jpg"
               alt="HexCode"
@@ -46,9 +90,7 @@ export default function Home() {
           </div>
 
           <div>
-            <p className="text-lg font-medium text-white">
-              Pawan Sedara 🇦🇺
-            </p>
+            <p className="text-lg font-medium text-white">Pawan Sedara 🇦🇺</p>
 
             <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">
               HexCode
@@ -56,14 +98,19 @@ export default function Home() {
           </div>
         </div>
 
-        <h1 className="max-w-3xl text-4xl font-semibold tracking-tight leading-[1.02] text-white md:text-6xl">
-          Self-hosted infrastructure, backend engineering, and systems built to last.
+        <h1 className="max-w-3xl text-4xl font-semibold leading-[1.02] tracking-tight text-white md:text-6xl">
+          Self-hosted infrastructure, backend engineering, and systems built to
+          last.
         </h1>
+
         <p className="mt-6 text-sm uppercase tracking-[0.3em] text-neutral-500">
           Linux • DevOps • Infrastructure Engineering
         </p>
+
         <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-400">
-          I build and operate self-hosted platforms, backend services, and secure Linux infrastructure with a strong focus on reliability, privacy, and clean engineering.
+          I build and operate self-hosted platforms, backend services, and secure
+          Linux infrastructure with a strong focus on reliability, privacy, and
+          clean engineering.
         </p>
 
         <div className="mt-10 flex flex-wrap gap-3">
@@ -93,6 +140,8 @@ export default function Home() {
         <div className="mt-16 grid gap-4 md:grid-cols-2">
           {services.map((service) => {
             const live = getStatus(service.name);
+            const serviceHistory = getHistory(service.name);
+            const days = serviceHistory?.history ?? [];
 
             return (
               <div
@@ -108,7 +157,9 @@ export default function Home() {
                     <div
                       className={`h-2.5 w-2.5 rounded-full ${live?.status === "online"
                         ? "bg-green-500"
-                        : "bg-red-500"
+                        : live?.status === "offline"
+                          ? "bg-red-500"
+                          : "bg-neutral-700"
                         }`}
                     />
 
@@ -138,6 +189,43 @@ export default function Home() {
                   </a>
                 </div>
 
+                <div className="mt-5">
+                  <div className="mb-2 flex items-center justify-between gap-4">
+                    <p className="text-xs text-neutral-500">
+                      {serviceHistory?.trackedDays
+                        ? `${serviceHistory.trackedDays}-day uptime history`
+                        : "Uptime history collecting"}
+                    </p>
+
+                    <p className="text-xs text-neutral-600">Target: 90 days</p>
+                  </div>
+
+                  <div className="flex gap-1">
+                    {days.length > 0
+                      ? days.map((day) => (
+                        <div
+                          key={day.date}
+                          aria-label={`${day.date}: ${day.status} uptime`}
+                          title={`${day.date} • ${day.uptime ?? 0
+                            }% uptime • ${day.avgLatencyMs
+                              ? `${day.avgLatencyMs}ms avg`
+                              : "no latency"
+                            } • ${day.onlineChecks}/${day.totalChecks
+                            } checks online`}
+                          className={`h-10 flex-1 rounded-md transition-opacity hover:opacity-80 ${getBarClass(
+                            day.status
+                          )}`}
+                        />
+                      ))
+                      : Array.from({ length: 7 }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="h-10 flex-1 rounded-md transition-opacity hover:opacity-80 bg-neutral-900"
+                        />
+                      ))}
+                  </div>
+                </div>
+
                 <div className="mt-5 flex flex-wrap gap-2">
                   {service.stack.map((item) => (
                     <span
@@ -159,7 +247,7 @@ export default function Home() {
               Projects
             </p>
 
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight leading-[1.02] text-white md:text-5xl">
+            <h2 className="mt-3 text-3xl font-semibold leading-[1.02] tracking-tight text-white md:text-5xl">
               Selected work.
             </h2>
           </div>
@@ -168,9 +256,7 @@ export default function Home() {
             <div className="rounded-3xl border border-neutral-900 bg-neutral-950/70 p-8">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-2xl font-medium text-white">
-                    AussieLK
-                  </h3>
+                  <h3 className="text-2xl font-medium text-white">AussieLK</h3>
 
                   <p className="mt-1 text-sm text-neutral-500">
                     Founder & Lead Developer
@@ -183,11 +269,12 @@ export default function Home() {
               </div>
 
               <p className="mt-5 max-w-3xl leading-7 text-neutral-400">
-                AussieLK is a request-based sourcing platform I founded to connect
-                Australian products with customers in Sri Lanka. I designed and built the
-                full platform architecture, including authentication systems, encrypted
-                request workflows, payment integration, admin tooling, audit logging, and
-                infrastructure deployment.
+                AussieLK is a request-based sourcing platform I founded to
+                connect Australian products with customers in Sri Lanka. I
+                designed and built the full platform architecture, including
+                authentication systems, encrypted request workflows, payment
+                integration, admin tooling, audit logging, and infrastructure
+                deployment.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -225,7 +312,7 @@ export default function Home() {
                 Self-Hosted Infrastructure
               </h3>
 
-              <p className="mt-5 max-w-3xl text-neutral-400 leading-7">
+              <p className="mt-5 max-w-3xl leading-7 text-neutral-400">
                 Privacy-focused VPS infrastructure featuring SearXNG, Forgejo,
                 WireGuard, Dockerized services, reverse proxy routing with Caddy,
                 hardened firewall rules, and production uptime monitoring.
@@ -251,14 +338,12 @@ export default function Home() {
             </div>
 
             <div className="rounded-3xl border border-neutral-900 bg-neutral-950/70 p-8">
-              <h3 className="text-2xl font-medium text-white">
-                P.A.T.H.
-              </h3>
+              <h3 className="text-2xl font-medium text-white">P.A.T.H.</h3>
 
-              <p className="mt-5 max-w-3xl text-neutral-400 leading-7">
+              <p className="mt-5 max-w-3xl leading-7 text-neutral-400">
                 GPU-accelerated compute research project built with Apple Metal,
-                exploring deterministic high-throughput prime computation and scalable
-                segmented sieve execution on Apple Silicon hardware.
+                exploring deterministic high-throughput prime computation and
+                scalable segmented sieve execution on Apple Silicon hardware.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
@@ -279,12 +364,16 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <section id="contact" className="mt-32 border-t border-neutral-900 pt-12">
+
+          <section
+            id="contact"
+            className="mt-32 border-t border-neutral-900 pt-12"
+          >
             <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">
               Contact
             </p>
 
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight leading-[1.02] text-white">
+            <h2 className="mt-3 text-3xl font-semibold leading-[1.02] tracking-tight text-white">
               Let’s build something serious.
             </h2>
 
@@ -305,7 +394,7 @@ export default function Home() {
               </a>
 
               <a
-                href="https://search-public.hexcode.au/"
+                href="https://search.hexcode.au/"
                 target="_blank"
                 className="transition hover:text-white"
               >
