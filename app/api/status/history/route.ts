@@ -12,10 +12,11 @@ type HistoryRow = {
 };
 
 export async function GET() {
-  const history = services.map((service) => {
-    const rows = db
-      .prepare(
-        `
+  try {
+    const history = services.map((service) => {
+      const rows = db
+        .prepare(
+          `
         SELECT
           date(checked_at) as day,
           COUNT(*) as total_checks,
@@ -26,38 +27,53 @@ export async function GET() {
           AND checked_at >= datetime('now', '-90 days')
         GROUP BY day
         ORDER BY day ASC
-        `
-      )
-      .all(service.name) as HistoryRow[];
+        `,
+        )
+        .all(service.name) as HistoryRow[];
 
-    return {
-      name: service.name,
-      url: service.url,
-      trackedDays: rows.length,
-      history: rows.map((row) => {
-        const uptime =
-          row.total_checks > 0
-            ? Number(((row.online_checks / row.total_checks) * 100).toFixed(2))
-            : null;
+      return {
+        name: service.name,
+        url: service.url,
+        trackedDays: rows.length,
+        history: rows.map((row) => {
+          const uptime =
+            row.total_checks > 0
+              ? Number(
+                  ((row.online_checks / row.total_checks) * 100).toFixed(2),
+                )
+              : null;
 
-        return {
-          date: row.day,
-          uptime,
-          totalChecks: row.total_checks,
-          onlineChecks: row.online_checks,
-          avgLatencyMs: row.avg_latency_ms,
-          status:
-            uptime === null
-              ? "unknown"
-              : uptime >= 99
-                ? "good"
-                : uptime >= 95
-                  ? "degraded"
-                  : "bad",
-        };
-      }),
-    };
-  });
+          return {
+            date: row.day,
+            uptime,
+            totalChecks: row.total_checks,
+            onlineChecks: row.online_checks,
+            avgLatencyMs: row.avg_latency_ms,
+            status:
+              uptime === null
+                ? "unknown"
+                : uptime >= 99
+                  ? "good"
+                  : uptime >= 95
+                    ? "degraded"
+                    : "bad",
+          };
+        }),
+      };
+    });
 
-  return NextResponse.json(history);
+    return NextResponse.json(history);
+  } catch (error) {
+    console.error("History API error:", error);
+
+    return NextResponse.json(
+      services.map((service) => ({
+        name: service.name,
+        url: service.url,
+        trackedDays: 0,
+        history: [],
+      })),
+      { status: 200 },
+    );
+  }
 }
