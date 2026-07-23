@@ -219,6 +219,80 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6">
+            <div className="rounded-3xl border border-neutral-800 bg-neutral-950/70 p-8">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-2xl font-medium text-white">PlainLink</h3>
+
+                  <p className="mt-1 text-sm text-neutral-500">
+                    Local-first link cleaner for macOS
+                  </p>
+                </div>
+
+                <span className="rounded-full border border-neutral-700 px-3 py-1 text-xs text-neutral-400">
+                  Open Source · Developer Preview
+                </span>
+              </div>
+
+              <p className="mt-5 max-w-3xl leading-7 text-neutral-400">
+                PlainLink cleans tracking parameters from copied URLs at the
+                system clipboard level, without requiring a browser extension.
+                I built its core engine and CLI in Rust, paired it with a native
+                Swift/AppKit menu bar app and user LaunchAgent, and designed a
+                conservative, fixture-tested community rules format that
+                preserves unknown parameters by default.
+              </p>
+
+              <div className="mt-6 grid overflow-hidden rounded-2xl border border-neutral-900 bg-black/40 sm:grid-cols-2">
+                <div className="border-b border-neutral-900 p-4 sm:border-r sm:border-b-0">
+                  <p className="text-xs uppercase tracking-[0.18em] text-neutral-600">
+                    Copied
+                  </p>
+                  <p className="mt-2 break-all font-mono text-xs leading-5 text-neutral-500">
+                    example.com/read?utm_source=newsletter&amp;id=42
+                  </p>
+                </div>
+
+                <div className="p-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-emerald-600">
+                    Cleaned
+                  </p>
+                  <p className="mt-2 break-all font-mono text-xs leading-5 text-neutral-300">
+                    example.com/read?id=42
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {[
+                  "Rust",
+                  "Swift",
+                  "AppKit",
+                  "macOS",
+                  "LaunchAgent",
+                  "GitHub Actions",
+                ].map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full border border-neutral-800 px-3 py-1 text-xs text-neutral-500"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <a
+                  href="https://github.com/HexCodeYT/PlainLink"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center text-sm text-neutral-300 transition hover:text-white"
+                >
+                  Explore PlainLink →
+                </a>
+              </div>
+            </div>
+
             <div className="rounded-3xl border border-neutral-900 bg-neutral-950/70 p-8">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
