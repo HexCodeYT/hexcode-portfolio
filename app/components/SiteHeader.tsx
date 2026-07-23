@@ -19,7 +19,7 @@ export function SiteHeader() {
             Work
           </Link>
           <Link href="/agencies" className={navLinkClass}>
-            Agency Partners
+            For Agencies
           </Link>
           <Link href="/#contact" className={`${navLinkClass} hidden sm:block`}>
             Contact

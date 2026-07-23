@@ -11,7 +11,7 @@ type FormState =
   | { status: "error"; message: string };
 
 const inputClass =
-  "mt-2 w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-base text-white outline-none transition placeholder:text-neutral-700 hover:border-neutral-700 focus:border-neutral-500 focus:ring-2 focus:ring-white/20";
+  "mt-2 w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-base text-white outline-none transition placeholder:text-neutral-700 hover:border-neutral-700 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20";
 
 export function AgencyContactForm() {
   const [formState, setFormState] = useState<FormState>({
@@ -126,7 +126,12 @@ export function AgencyContactForm() {
 
         <label className="text-sm text-neutral-300">
           Project type
-          <select name="projectType" required defaultValue="" className={inputClass}>
+          <select
+            name="projectType"
+            required
+            defaultValue=""
+            className={inputClass}
+          >
             <option value="" disabled>
               Select a project type
             </option>
@@ -136,30 +141,6 @@ export function AgencyContactForm() {
             <option value="Technical rescue">Technical rescue</option>
             <option value="Ongoing development capacity">Ongoing development capacity</option>
             <option value="Other">Other</option>
-          </select>
-        </label>
-
-        <label className="text-sm text-neutral-300">
-          Desired delivery date
-          <input
-            name="desiredDeliveryDate"
-            type="date"
-            required
-            className={inputClass}
-          />
-        </label>
-
-        <label className="text-sm text-neutral-300">
-          Indicative budget
-          <select name="indicativeBudget" required defaultValue="" className={inputClass}>
-            <option value="" disabled>
-              Select a budget range
-            </option>
-            <option value="$500–$999">$500–$999</option>
-            <option value="$1,000–$1,999">$1,000–$1,999</option>
-            <option value="$2,000–$4,999">$2,000–$4,999</option>
-            <option value="$5,000+">$5,000+</option>
-            <option value="Not confirmed">Not confirmed</option>
           </select>
         </label>
       </div>
@@ -194,17 +175,17 @@ export function AgencyContactForm() {
         <button
           type="submit"
           disabled={formState.status === "submitting"}
-          className="rounded-full bg-white px-5 py-3 text-sm font-medium text-black outline-none transition hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-wait disabled:opacity-60"
+          className="rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-black outline-none transition hover:bg-emerald-400 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-wait disabled:opacity-60"
         >
           {formState.status === "submitting" ? "Sending…" : "Send project details"}
         </button>
 
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-neutral-500">
           Prefer email?{" "}
           <TrackedAgencyLink
             href="mailto:pawan@hexcode.au?subject=White-label%20agency%20project"
             event="agency_email_click"
-            className="rounded-sm text-neutral-400 underline decoration-neutral-700 underline-offset-4 outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-white"
+            className="rounded-sm text-neutral-300 underline decoration-neutral-600 underline-offset-4 outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             pawan@hexcode.au
           </TrackedAgencyLink>

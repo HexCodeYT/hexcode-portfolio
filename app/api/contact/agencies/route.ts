@@ -9,14 +9,6 @@ const projectTypes = new Set([
   "Other",
 ]);
 
-const budgetRanges = new Set([
-  "$500–$999",
-  "$1,000–$1,999",
-  "$2,000–$4,999",
-  "$5,000+",
-  "Not confirmed",
-]);
-
 const headerUnsafePattern = /[\u0000-\u001f\u007f]/;
 const maxRequestBytes = 16_384;
 
@@ -25,8 +17,6 @@ type AgencyEnquiry = {
   agency: string;
   email: string;
   projectType: string;
-  desiredDeliveryDate: string;
-  indicativeBudget: string;
   projectDetails: string;
 };
 
@@ -43,17 +33,10 @@ function parseEnquiry(body: unknown): AgencyEnquiry | null {
     agency: readString(record.agency),
     email: readString(record.email).toLowerCase(),
     projectType: readString(record.projectType),
-    desiredDeliveryDate: readString(record.desiredDeliveryDate),
-    indicativeBudget: readString(record.indicativeBudget),
     projectDetails: readString(record.projectDetails),
   };
 
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(enquiry.email);
-  const parsedDate = new Date(`${enquiry.desiredDeliveryDate}T00:00:00Z`);
-  const validDate =
-    /^\d{4}-\d{2}-\d{2}$/.test(enquiry.desiredDeliveryDate) &&
-    !Number.isNaN(parsedDate.getTime()) &&
-    parsedDate.toISOString().slice(0, 10) === enquiry.desiredDeliveryDate;
 
   if (
     enquiry.name.length < 2 ||
@@ -66,8 +49,6 @@ function parseEnquiry(body: unknown): AgencyEnquiry | null {
     enquiry.email.length > 254 ||
     headerUnsafePattern.test(enquiry.email) ||
     !projectTypes.has(enquiry.projectType) ||
-    !validDate ||
-    !budgetRanges.has(enquiry.indicativeBudget) ||
     enquiry.projectDetails.length < 20 ||
     enquiry.projectDetails.length > 4000
   ) {
@@ -169,8 +150,6 @@ export async function POST(request: Request) {
     `Agency: ${enquiry.agency}`,
     `Email: ${enquiry.email}`,
     `Project type: ${enquiry.projectType}`,
-    `Desired delivery date: ${enquiry.desiredDeliveryDate}`,
-    `Indicative budget: ${enquiry.indicativeBudget}`,
     "",
     "Project details:",
     enquiry.projectDetails,

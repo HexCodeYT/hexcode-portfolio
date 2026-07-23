@@ -12,350 +12,151 @@ export const metadata: Metadata = {
   },
 };
 
-const outcomes = [
-  {
-    title: "Overflow capacity",
-    description:
-      "Add delivery capacity when your internal team is booked without committing to another permanent hire.",
-  },
-  {
-    title: "Technical depth",
-    description:
-      "Bring in backend, integration, deployment and production support when a build extends beyond presentation work.",
-  },
-  {
-    title: "Invisible delivery",
-    description:
-      "Work is delivered under your agency relationship, with confidential communication and no direct client solicitation.",
-  },
-];
-
-const services = [
-  "Figma-to-code implementation",
-  "Landing pages and campaign sites",
-  "Multi-page business websites",
-  "Ecommerce and payment integrations",
-  "Analytics and conversion tracking",
-  "Forms, APIs and third-party integrations",
-  "Performance and accessibility remediation",
-  "Deployment and production troubleshooting",
-  "Ongoing development capacity",
-];
-
-const engagements = [
-  { title: "Landing pages", price: "From $900" },
-  { title: "Business websites", price: "From $2,000" },
-  { title: "Technical rescue", price: "From $500" },
-  { title: "Reserved monthly capacity", price: "From $2,000" },
-];
-
-const process = [
-  {
-    title: "Scope",
-    description:
-      "Share the designs, requirements, integrations, deadline and current project state.",
-  },
-  {
-    title: "Agreement",
-    description:
-      "Confirm the written scope, delivery plan, responsibilities, price and commencement payment.",
-  },
-  {
-    title: "Delivery",
-    description:
-      "Receive documented progress updates and review builds at agreed checkpoints.",
-  },
-  {
-    title: "Handover",
-    description:
-      "Receive production-ready code, deployment support and practical documentation for your team.",
-  },
-];
-
-const proof = [
-  {
-    title: "AussieLK",
-    label: "Full-stack platform",
-    description:
-      "Designed and built a request-based sourcing platform with authentication, encrypted request workflows, payment integration, admin tooling, audit logging and infrastructure deployment.",
-  },
-  {
-    title: "PlainLink",
-    label: "Native macOS product",
-    description:
-      "Built a local-first copied-link cleaner with a Rust core and CLI, native Swift/AppKit menu bar app, user LaunchAgent, fixture-tested rules and release automation.",
-  },
-  {
-    title: "Infrastructure and technical operations",
-    label: "Production systems",
-    description:
-      "Deploy and operate containerised services with secure networking, reverse proxy routing, firewall controls, persistent monitoring and production troubleshooting.",
-  },
-];
-
-const principles = [
-  "Fixed documented scope",
-  "Realistic delivery dates",
-  "Written progress updates",
-  "Confidential white-label delivery",
-  "Clean handover and documentation",
-  "No direct solicitation of agency clients",
-  "Paid pilot available",
-  "NDA-friendly",
-];
-
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description?: string;
-}) {
-  return (
-    <div className="mb-10 max-w-3xl">
-      <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">
-        {eyebrow}
-      </p>
-      <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
-        {title}
-      </h2>
-      {description ? (
-        <p className="mt-5 text-lg leading-8 text-neutral-400">{description}</p>
-      ) : null}
-    </div>
-  );
-}
-
 export default function AgenciesPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-black text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-black text-white">
       <AgencyPageTracker />
 
-      <section className="mx-auto max-w-6xl px-6 pt-36 pb-24 md:pt-44 md:pb-32">
-        <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">
-          White-label agency development
-        </p>
-
-        <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.02] tracking-tight text-white sm:text-5xl md:text-7xl">
-          You keep the client. I handle the build.
-        </h1>
-
-        <p className="mt-7 max-w-3xl text-lg leading-8 text-neutral-400 md:text-xl md:leading-9">
-          Reliable white-label development for design, marketing and SEO
-          agencies that need projects delivered without hiring another
-          full-time developer.
-        </p>
-
-        <div className="mt-10 flex flex-wrap gap-3">
-          <TrackedAgencyLink
-            href="#agency-contact"
-            event="agency_primary_cta_click"
-            className="rounded-full bg-white px-5 py-3 text-sm font-medium text-black outline-none transition hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-          >
-            Discuss a project
-          </TrackedAgencyLink>
-          <a
-            href="#process"
-            className="rounded-full border border-neutral-800 px-5 py-3 text-sm font-medium text-white outline-none transition hover:border-neutral-600 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-          >
-            See how it works
-          </a>
-        </div>
-
-        <p className="mt-7 text-sm leading-6 text-neutral-600">
-          Melbourne-based • Australian business hours • Confidential delivery
-        </p>
-      </section>
-
-      <section className="border-y border-neutral-900 bg-neutral-950/40">
-        <div className="mx-auto grid max-w-6xl gap-px px-6 py-16 md:grid-cols-3 md:py-20">
-          {outcomes.map((outcome, index) => (
-            <article
-              key={outcome.title}
-              className={`py-7 md:px-7 md:py-0 ${
-                index > 0
-                  ? "border-t border-neutral-900 md:border-t-0 md:border-l"
-                  : ""
-              }`}
-            >
-              <h2 className="text-xl font-medium text-white">{outcome.title}</h2>
-              <p className="mt-3 text-sm leading-6 text-neutral-500">
-                {outcome.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <SectionHeading
-          eyebrow="Services"
-          title="Development capacity where your agency needs it."
+      <section className="relative mx-auto flex min-h-[44rem] max-w-6xl items-center px-6 pt-28 pb-20 md:min-h-[52rem] md:pt-32 md:pb-28">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 right-[-18rem] h-[38rem] w-[38rem] rounded-full bg-emerald-500/[0.08] blur-[120px]"
         />
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <div
-              key={service}
-              className="flex min-h-28 items-end rounded-2xl border border-neutral-900 bg-neutral-950/70 p-5"
+        <div className="relative max-w-5xl">
+          <p className="flex items-center gap-3 text-xs font-medium tracking-[0.28em] text-emerald-500 uppercase sm:text-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            White-label development
+          </p>
+
+          <h1 className="mt-7 text-5xl font-semibold leading-[0.96] tracking-[-0.045em] text-white sm:text-6xl md:text-8xl lg:text-[6.5rem]">
+            <span className="block">You keep the client.</span>
+            <span className="block">I handle the build.</span>
+          </h1>
+
+          <p className="mt-8 max-w-3xl text-lg leading-8 text-neutral-400 md:text-xl md:leading-9">
+            Websites, commerce, integrations and technical rescue for design
+            and marketing agencies that need reliable delivery capacity.
+          </p>
+
+          <div className="mt-10 flex flex-wrap gap-3">
+            <TrackedAgencyLink
+              href="#agency-contact"
+              event="agency_primary_cta_click"
+              className="rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-black outline-none transition hover:bg-emerald-400 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
-              <p className="font-medium leading-6 text-neutral-300">{service}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-neutral-900 bg-neutral-950/40">
-        <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-          <SectionHeading
-            eyebrow="Engagement options"
-            title="Clear starting points."
-            description="Choose a defined build, bring in technical rescue, or reserve ongoing delivery capacity."
-          />
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {engagements.map((engagement) => (
-              <article
-                key={engagement.title}
-                className="rounded-3xl border border-neutral-900 bg-black/60 p-6"
-              >
-                <p className="text-sm leading-6 text-neutral-500">
-                  {engagement.title}
-                </p>
-                <p className="mt-5 text-2xl font-medium text-white">
-                  {engagement.price}
-                </p>
-              </article>
-            ))}
+              Start a project
+            </TrackedAgencyLink>
+            <Link
+              href="/#projects"
+              className="rounded-full border border-neutral-800 px-5 py-3 text-sm font-medium text-white outline-none transition hover:border-neutral-600 hover:bg-neutral-950 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            >
+              View selected work
+            </Link>
           </div>
 
-          <div className="mt-6 rounded-2xl border border-neutral-900 p-5 text-sm leading-6 text-neutral-500">
-            <p>Fixed projects require a 50% commencement payment.</p>
-            <p className="mt-1">
-              Final pricing depends on scope, supplied designs, integrations and
-              turnaround.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="process" className="scroll-mt-24">
-        <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-          <SectionHeading eyebrow="Process" title="Structured enough to stay invisible." />
-
-          <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {process.map((step, index) => (
-              <li
-                key={step.title}
-                className="rounded-3xl border border-neutral-900 bg-neutral-950/70 p-6"
-              >
-                <p className="font-mono text-xs text-neutral-600">
-                  0{index + 1}
-                </p>
-                <h3 className="mt-8 text-xl font-medium text-white">{step.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-neutral-500">
-                  {step.description}
-                </p>
-              </li>
-            ))}
-          </ol>
-
-          <p className="mt-7 max-w-3xl text-base leading-7 text-neutral-400">
-            Your agency retains ownership of the client relationship and
-            commercial terms.
+          <p className="mt-8 text-sm leading-6 text-neutral-500">
+            Melbourne-based · NDA-friendly · Your clients stay yours
           </p>
         </div>
       </section>
 
       <section className="border-y border-neutral-900 bg-neutral-950/40">
-        <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-          <SectionHeading
-            eyebrow="Proof"
-            title="Systems delivered across product and operations."
-          />
-
-          <div className="grid gap-5 lg:grid-cols-3">
-            {proof.map((item) => (
-              <article
-                key={item.title}
-                className="rounded-3xl border border-neutral-900 bg-black/60 p-7"
-              >
-                <p className="text-xs uppercase tracking-[0.18em] text-neutral-600">
-                  {item.label}
-                </p>
-                <h3 className="mt-5 text-2xl font-medium text-white">{item.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-neutral-500">
-                  {item.description}
-                </p>
-              </article>
-            ))}
+        <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+          <div className="mb-10 flex max-w-3xl items-end justify-between gap-6">
+            <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
+              Ways to work together.
+            </h2>
           </div>
+
+          <div className="grid gap-4 lg:grid-cols-[1.35fr_0.85fr] lg:grid-rows-2">
+            <article className="rounded-3xl border border-emerald-500/25 bg-black p-7 shadow-[inset_0_1px_0_rgba(16,185,129,0.08)] transition hover:border-emerald-500/45 sm:p-9 lg:row-span-2">
+              <div className="flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-emerald-500 uppercase">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                Fixed-scope delivery
+              </div>
+              <h3 className="mt-16 text-3xl font-medium tracking-tight text-white sm:text-4xl">
+                Project builds
+              </h3>
+              <p className="mt-4 max-w-xl text-base leading-7 text-neutral-400">
+                Websites, landing pages, ecommerce and Figma-to-code delivery.
+              </p>
+              <ul className="mt-10 space-y-3 border-t border-neutral-800 pt-6 text-sm text-neutral-300">
+                <li>Landing pages from $900</li>
+                <li>Business websites from $2,000</li>
+                <li className="text-neutral-400">50% commencement payment</li>
+              </ul>
+            </article>
+
+            <article className="rounded-3xl border border-neutral-900 bg-black/70 p-7 transition hover:border-neutral-700 sm:p-8">
+              <h3 className="text-2xl font-medium tracking-tight text-white">
+                Technical rescue
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-neutral-400">
+                Broken deployments, payments, integrations, analytics and
+                performance problems.
+              </p>
+              <p className="mt-8 text-sm font-medium text-white">From $500</p>
+            </article>
+
+            <article className="rounded-3xl border border-neutral-900 bg-black/70 p-7 transition hover:border-neutral-700 sm:p-8">
+              <h3 className="text-2xl font-medium tracking-tight text-white">
+                Reserved capacity
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-neutral-400">
+                Pre-booked development capacity for agencies with recurring
+                overflow work.
+              </p>
+              <p className="mt-8 text-sm font-medium text-white">
+                From $2,000/month
+              </p>
+            </article>
+          </div>
+
+          <p className="mt-6 max-w-3xl text-sm leading-6 text-neutral-500">
+            Final pricing depends on scope, supplied designs, integrations and
+            turnaround requirements.
+          </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <SectionHeading
-          eyebrow="Working principles"
-          title="A predictable extension of your team."
-        />
-
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {principles.map((principle) => (
-            <li
-              key={principle}
-              className="flex min-h-24 items-center gap-3 rounded-2xl border border-neutral-900 px-5 py-4 text-sm leading-6 text-neutral-400"
-            >
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-500" />
-              {principle}
-            </li>
-          ))}
-        </ul>
+      <section className="mx-auto max-w-6xl px-6 pt-14 pb-20 md:pt-20 md:pb-28">
+        <div className="max-w-4xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            Built beyond brochure sites.
+          </h2>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-400">
+            Production experience across commerce, payments, backend systems and
+            infrastructure through AussieLK, PlainLink and self-hosted
+            operations.
+          </p>
+          <Link
+            href="/#projects"
+            className="mt-8 inline-block rounded-sm text-sm font-medium text-emerald-500 outline-none transition hover:text-emerald-400 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+          >
+            View selected work <span aria-hidden="true">→</span>
+          </Link>
+        </div>
       </section>
 
       <section
         id="agency-contact"
         className="scroll-mt-20 border-t border-neutral-900 bg-neutral-950/40"
       >
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-          <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">
-              Contact
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-              Have a project your team cannot currently fit?
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:py-28 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <div className="lg:pt-5">
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+              Got work your team cannot fit?
             </h2>
-            <p className="mt-6 max-w-xl text-base leading-7 text-neutral-500">
-              Share the practical details. You will receive a direct response
-              about fit, availability and the next useful step.
+            <p className="mt-6 max-w-xl text-base leading-7 text-neutral-400">
+              Send the brief. I’ll tell you directly whether I can deliver it,
+              what it will cost and when it can be done.
             </p>
           </div>
 
           <AgencyContactForm />
         </div>
       </section>
-
-      <footer className="border-t border-neutral-900">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
-          <p>HexCode · Melbourne, Australia</p>
-          <div className="flex gap-5">
-            <Link
-              href="/"
-              className="rounded-sm outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-white"
-            >
-              Portfolio
-            </Link>
-            <TrackedAgencyLink
-              href="mailto:pawan@hexcode.au?subject=White-label%20agency%20project"
-              event="agency_email_click"
-              className="rounded-sm outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-white"
-            >
-              Email
-            </TrackedAgencyLink>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
