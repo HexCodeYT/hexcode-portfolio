@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     description: "Infrastructure, systems, and backend engineering.",
     images: [
       {
-        url: "/hexcode-agencies-og.png",
+        url: "/hexcode-home-og.png",
         width: 1200,
         height: 630,
-        alt: "HexCode — You keep the client. I handle the build.",
+        alt: "HexCode — Self-hosted infrastructure, backend engineering, and systems built to last.",
       },
     ],
   },
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HexCode",
     description: "Infrastructure, systems, and backend engineering.",
-    images: ["/hexcode-agencies-og.png"],
+    images: ["/hexcode-home-og.png"],
   },
 };
 

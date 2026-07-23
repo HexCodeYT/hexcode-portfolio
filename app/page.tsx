@@ -181,9 +181,11 @@ export default function Home() {
 
                 <div className="mt-4 flex items-center justify-between">
                   <p className="text-sm text-neutral-500">
-                    {live?.latency
-                      ? `${live.latency}ms response`
-                      : "No response"}
+                    {!live
+                      ? "Checking status…"
+                      : live.latency !== null
+                        ? `${live.latency}ms response`
+                        : "No response"}
                   </p>
 
                   <a
