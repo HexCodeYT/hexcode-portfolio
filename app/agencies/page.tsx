@@ -10,6 +10,30 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://hexcode.au/agencies",
   },
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    url: "https://hexcode.au/agencies",
+    siteName: "HexCode",
+    title: "White-label web development for agencies | HexCode",
+    description:
+      "Melbourne-based white-label development for design, marketing and SEO agencies. Reliable website builds, ecommerce, integrations and technical rescue without adding headcount.",
+    images: [
+      {
+        url: "/hexcode-agencies-og.png",
+        width: 1200,
+        height: 630,
+        alt: "HexCode — You keep the client. I handle the build.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "White-label web development for agencies | HexCode",
+    description:
+      "Melbourne-based white-label development for design, marketing and SEO agencies. Reliable website builds, ecommerce, integrations and technical rescue without adding headcount.",
+    images: ["/hexcode-agencies-og.png"],
+  },
 };
 
 export default function AgenciesPage() {

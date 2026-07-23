@@ -12,6 +12,31 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://hexcode.au"),
   title: "HexCode",
   description: "Infrastructure, systems, and backend engineering.",
+  alternates: {
+    canonical: "https://hexcode.au",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    url: "https://hexcode.au",
+    siteName: "HexCode",
+    title: "HexCode",
+    description: "Infrastructure, systems, and backend engineering.",
+    images: [
+      {
+        url: "/hexcode-agencies-og.png",
+        width: 1200,
+        height: 630,
+        alt: "HexCode — You keep the client. I handle the build.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HexCode",
+    description: "Infrastructure, systems, and backend engineering.",
+    images: ["/hexcode-agencies-og.png"],
+  },
 };
 
 export default function RootLayout({
