@@ -1,15 +1,5 @@
 import { NextResponse } from "next/server";
-
-const services = [
-  {
-    name: "SearXNG",
-    url: "https://search.hexcode.au",
-  },
-  {
-    name: "Forgejo",
-    url: "https://git.hexcode.au",
-  },
-];
+import { services } from "@/lib/services";
 
 export async function GET() {
   const results = await Promise.all(
@@ -20,6 +10,7 @@ export async function GET() {
         const response = await fetch(service.url, {
           method: "HEAD",
           cache: "no-store",
+          signal: AbortSignal.timeout(10_000),
         });
 
         const latency = Date.now() - start;

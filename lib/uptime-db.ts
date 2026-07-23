@@ -21,9 +21,20 @@ db.exec(`
     status TEXT NOT NULL,
     status_code INTEGER,
     latency_ms INTEGER,
+    is_synthetic INTEGER NOT NULL DEFAULT 0,
     checked_at TEXT NOT NULL
   );
 
   CREATE INDEX IF NOT EXISTS idx_uptime_service_checked_at
   ON uptime_checks (service_name, checked_at);
 `);
+
+const columns = db.prepare("PRAGMA table_info(uptime_checks)").all() as {
+  name: string;
+}[];
+
+if (!columns.some((column) => column.name === "is_synthetic")) {
+  db.exec(
+    "ALTER TABLE uptime_checks ADD COLUMN is_synthetic INTEGER NOT NULL DEFAULT 0",
+  );
+}

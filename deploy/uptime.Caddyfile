@@ -1,0 +1,8 @@
+# Merge these handlers into the existing search.hexcode.au site block.
+handle_path /uptime-api/* {
+  reverse_proxy 127.0.0.1:3100
+}
+
+handle {
+  reverse_proxy 127.0.0.1:8080
+}

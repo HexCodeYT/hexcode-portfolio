@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { services } from "@/lib/services";
 import Image from "next/image";
+import { UptimeHeatmap } from "./components/UptimeHeatmap";
 
 type ServiceStatus = {
   name: string;
@@ -70,22 +71,6 @@ export default function Home() {
 
   const getHistory = (name: string) => {
     return historyData.find((item) => item.name === name);
-  };
-
-  const getBarClass = (status: UptimeHistoryDay["status"]) => {
-    switch (status) {
-      case "good":
-        return "bg-blue-500";
-
-      case "degraded":
-        return "bg-orange-400";
-
-      case "bad":
-        return "bg-red-500";
-
-      default:
-        return "bg-neutral-900";
-    }
   };
 
   return (
@@ -202,112 +187,10 @@ export default function Home() {
                   </a>
                 </div>
 
-                <div className="mt-5">
-                  <div className="mb-2 flex items-center justify-between gap-4">
-                    <p className="text-xs text-neutral-500">
-                      {serviceHistory?.trackedDays
-                        ? `${serviceHistory.trackedDays}-day uptime history`
-                        : "Uptime history collecting"}
-                    </p>
-
-                    <p className="text-xs text-neutral-600">Target: 90 days</p>
-                  </div>
-                  <div className="flex gap-1">
-                    {days.length > 0 ? (
-                      days.map((day) => (
-                        <div
-                          key={day.date}
-                          className="group relative flex-1"
-                          aria-label={`${day.date}: ${day.status} uptime`}
-                        >
-                          <div
-                            className={`h-10 rounded-md transition-all duration-200 hover:opacity-80 ${getBarClass(
-                              day.status
-                            )}`}
-                          />
-
-                          <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-3 w-52 -translate-x-1/2 rounded-2xl border border-neutral-800 bg-black/95 p-3 opacity-0 shadow-2xl backdrop-blur-md transition-all duration-200 group-hover:-translate-y-1 group-hover:opacity-100">
-                            <p className="text-xs font-medium text-white">
-                              {new Date(day.date).toLocaleDateString("en-AU", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </p>
-
-                            <div className="mt-3 space-y-1.5">
-                              <div className="flex items-center justify-between text-xs">
-                                <span className="text-neutral-500">Uptime</span>
-
-                                <span className="text-neutral-200">
-                                  {day.uptime ?? 0}%
-                                </span>
-                              </div>
-
-                              <div className="flex items-center justify-between text-xs">
-                                <span className="text-neutral-500">Avg latency</span>
-
-                                <span className="text-neutral-200">
-                                  {day.avgLatencyMs
-                                    ? `${day.avgLatencyMs}ms`
-                                    : "N/A"}
-                                </span>
-                              </div>
-
-                              <div className="flex items-center justify-between text-xs">
-                                <span className="text-neutral-500">Checks</span>
-
-                                <span className="text-neutral-200">
-                                  {day.onlineChecks}/{day.totalChecks}
-                                </span>
-                              </div>
-
-                              <div className="flex items-center justify-between text-xs">
-                                <span className="text-neutral-500">Status</span>
-
-                                <span className="capitalize text-neutral-200">
-                                  {day.status}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      Array.from({ length: 7 }).map((_, index) => (
-                        <div
-                          key={index}
-                          className="h-10 flex-1 rounded-md bg-neutral-900"
-                        />
-                      ))
-                    )}
-                  </div>
-
-                  {/* <div className="flex gap-1">
-                    {days.length > 0
-                      ? days.map((day) => (
-                        <div
-                          key={day.date}
-                          aria-label={`${day.date}: ${day.status} uptime`}
-                          title={`${day.date} • ${day.uptime ?? 0
-                            }% uptime • ${day.avgLatencyMs
-                              ? `${day.avgLatencyMs}ms avg`
-                              : "no latency"
-                            } • ${day.onlineChecks}/${day.totalChecks
-                            } checks online`}
-                          className={`h-10 flex-1 rounded-md transition-opacity hover:opacity-80 ${getBarClass(
-                            day.status
-                          )}`}
-                        />
-                      ))
-                      : Array.from({ length: 7 }).map((_, index) => (
-                        <div
-                          key={index}
-                          className="h-10 flex-1 rounded-md transition-opacity hover:opacity-80 bg-neutral-900"
-                        />
-                      ))}
-                  </div> */}
-                </div>
+                <UptimeHeatmap
+                  days={days}
+                  trackedDays={serviceHistory?.trackedDays ?? 0}
+                />
 
                 <div className="mt-5 flex flex-wrap gap-2">
                   {service.stack.map((item) => (

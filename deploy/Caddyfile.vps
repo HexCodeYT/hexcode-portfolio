@@ -1,0 +1,30 @@
+{
+    email fuses.seal1j@icloud.com
+    acme_ca https://acme-v02.api.letsencrypt.org/directory
+
+    servers {
+        protocols h1 h2
+    }
+}
+
+search.hexcode.au {
+    handle_path /uptime-api/* {
+        reverse_proxy 127.0.0.1:3100
+    }
+
+    handle {
+        reverse_proxy 127.0.0.1:8080
+    }
+}
+
+git.hexcode.au {
+    reverse_proxy 127.0.0.1:3001
+}
+
+search-public.hexcode.au {
+    reverse_proxy 127.0.0.1:8081
+}
+
+vault.hexcode.au {
+    reverse_proxy 127.0.0.1:8222
+}
