@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { services } from "@/lib/services";
 import Image from "next/image";
+import Link from "next/link";
 import { UptimeHeatmap } from "./components/UptimeHeatmap";
 
 type ServiceStatus = {
@@ -134,6 +135,13 @@ export default function Home() {
             Resume
           </a>
         </div>
+
+        <Link
+          href="/agencies"
+          className="mt-5 w-fit rounded-sm text-sm text-neutral-600 outline-none transition hover:text-neutral-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+        >
+          Need white-label development? <span aria-hidden="true">→</span>
+        </Link>
 
         <div className="mt-16 grid gap-4 md:grid-cols-2">
           {services.map((service) => {

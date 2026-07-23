@@ -31,3 +31,21 @@ in Vercel:
 ```text
 UPTIME_API_URL=https://search.hexcode.au/uptime-api
 ```
+
+## Agency contact and analytics
+
+The `/agencies` contact form sends through the Resend REST API. Configure these
+variables in the deployment environment:
+
+```text
+RESEND_API_KEY=re_...
+AGENCY_CONTACT_TO=pawan@hexcode.au
+AGENCY_CONTACT_FROM=HexCode <agency@your-verified-domain.example>
+```
+
+Optional consent-gated Google Analytics is enabled when this public variable is
+present:
+
+```text
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```

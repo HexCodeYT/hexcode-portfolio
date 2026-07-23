@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AnalyticsConsent } from "./components/AnalyticsConsent";
+import { SiteHeader } from "./components/SiteHeader";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,6 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hexcode.au"),
   title: "HexCode",
   description: "Infrastructure, systems, and backend engineering.",
 };
@@ -18,7 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} relative`}>
+        <SiteHeader />
+        {children}
+        <AnalyticsConsent />
+      </body>
     </html>
   );
 }
