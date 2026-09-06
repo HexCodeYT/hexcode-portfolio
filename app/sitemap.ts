@@ -12,5 +12,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: "https://hexcode.au/research/path",
+      changeFrequency: "yearly",
+      priority: 0.8,
+    },
   ];
 }
