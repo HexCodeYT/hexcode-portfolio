@@ -32,6 +32,31 @@ test("articles get a canonical route without hand-authored metadata", () => {
   assert.deepEqual(article.tags, ["Commerce"]);
 });
 
+test("canonical metadata can only confirm the article's exact HexCode route", () => {
+  const canonicalUrl = "https://hexcode.au/engineering/note";
+  assert.equal(
+    parseArticle(fixture(`canonicalUrl: "${canonicalUrl}"`), "note").canonicalUrl,
+    canonicalUrl,
+  );
+  for (const override of [
+    "https://external.example/engineering/note",
+    "https://hexcode.au.external.example/engineering/note",
+    "https://www.hexcode.au/engineering/note",
+    "https://hexcode.au/engineering/other-note",
+    "https://hexcode.au/engineering/note?source=social",
+    "https://hexcode.au/engineering/note#section",
+    "https://user@hexcode.au/engineering/note",
+    "http://hexcode.au/engineering/note",
+    "/engineering/note",
+  ]) {
+    assert.throws(
+      () => parseArticle(fixture(`canonicalUrl: "${override}"`), "note"),
+      /must match its HexCode HTTPS route/,
+      override,
+    );
+  }
+});
+
 test("draft content can be incomplete and is excluded before publication", () => {
   assert.equal(
     parseArticle("---\ndraft: true\n---\nUnfinished", "draft-note"),

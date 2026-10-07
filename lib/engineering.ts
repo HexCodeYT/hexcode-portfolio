@@ -63,17 +63,14 @@ export function parseArticle(source: string, slug: string): Article | null {
       : requiredString(data.relatedProject, "relatedProject");
   if (relatedProject && !slugPattern.test(relatedProject))
     throw new Error("Invalid related project slug");
-  const canonicalUrl =
-    data.canonicalUrl === undefined
-      ? `https://hexcode.au/engineering/${slug}`
-      : requiredString(data.canonicalUrl, "canonicalUrl");
-  const canonical = new URL(canonicalUrl);
+  const canonicalUrl = `https://hexcode.au/engineering/${slug}`;
   if (
-    canonical.protocol !== "https:" ||
-    canonical.username ||
-    canonical.password
+    data.canonicalUrl !== undefined &&
+    requiredString(data.canonicalUrl, "canonicalUrl") !== canonicalUrl
   )
-    throw new Error("Article canonicalUrl must be a public HTTPS URL");
+    throw new Error(
+      `Article canonicalUrl must match its HexCode HTTPS route: ${canonicalUrl}`,
+    );
   const socialImage =
     data.socialImage === undefined
       ? undefined

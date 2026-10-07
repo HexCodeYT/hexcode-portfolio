@@ -44,7 +44,7 @@ publishedAt: "2026-10-07"
 updatedAt: "2026-10-08" # optional, never before publishedAt
 tags: ["Architecture", "Reliability"]
 relatedProject: "palermo" # optional slug from lib/work.ts
-canonicalUrl: "https://hexcode.au/engineering/a-specific-engineering-decision" # defaults to this route
+canonicalUrl: "https://hexcode.au/engineering/a-specific-engineering-decision" # optional; must match this article's exact HexCode route
 # socialImage: "/articles/example-og.png" # optional image in public/
 # socialImageAlt: "Description of the image" # required with socialImage
 # draft: true # excludes the article from routes, cards, related links and sitemap
@@ -57,7 +57,7 @@ Body text, [internal links](/work/palermo), lists, and fenced code blocks.
 
 Dates must be quoted ISO dates. Set `draft: true` while preparing content; omit it or set it to false to publish on the next build. Publication is explicit; dates do not schedule deployment. Raw HTML is skipped and unsafe Markdown link protocols are filtered by react-markdown. Markdown is rendered on the server, without browser JavaScript for article content. Core Markdown is supported; no executable MDX, CMS, database or client editor is required.
 
-`lib/engineering.ts` validates metadata and loads published content. Related articles use the project and tags. Canonicals default to HexCode; keep this site as the source when adapting an article for social distribution. `lib/work.ts` drives selected work and case-study sitemap entries; add a case-study route and catalogue entry together.
+`lib/engineering.ts` validates metadata and loads published content. Related articles use the project and tags. Canonicals are derived from the article slug as `https://hexcode.au/engineering/<slug>`; optional `canonicalUrl` metadata must match that exact URL. External URLs, other paths, query strings and fragments fail publication validation, keeping HexCode the source of record when adapting an article for social distribution. `lib/work.ts` drives selected work and case-study sitemap entries; add a case-study route and catalogue entry together.
 
 The two initial engineering notes use documented Palermo boundaries. See [Palermo evidence](docs/palermo-evidence.md) for source revisions, attribution, test evidence and publication limits.
 
