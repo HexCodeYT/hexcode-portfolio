@@ -29,7 +29,7 @@ const metrics = [
 
 export default function PathResearchPage() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main id="main-content" className="min-h-screen bg-black text-white">
       <section className="relative overflow-hidden border-b border-neutral-900">
         <div
           aria-hidden="true"
@@ -38,10 +38,10 @@ export default function PathResearchPage() {
 
         <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-28 md:pb-28 md:pt-36">
           <Link
-            href="/"
+            href="/work"
             className="text-sm text-neutral-500 transition hover:text-white"
           >
-            ← HexCode
+            ← Selected work
           </Link>
 
           <p className="mt-12 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.28em] text-emerald-500 sm:text-sm">

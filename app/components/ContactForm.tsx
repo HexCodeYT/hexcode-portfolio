@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
-import { trackAgencyEvent } from "@/lib/analytics";
-import { TrackedAgencyLink } from "./AgencyTracking";
+import { trackEvent } from "@/lib/analytics";
+import { projectTypes } from "@/lib/contact";
 
 type FormState =
   | { status: "idle"; message: "" }
@@ -13,7 +13,15 @@ type FormState =
 const inputClass =
   "mt-2 w-full rounded-xl border border-neutral-800 bg-black px-4 py-3 text-base text-white outline-none transition placeholder:text-neutral-700 hover:border-neutral-700 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20";
 
-export function AgencyContactForm() {
+export function ContactForm({
+  audience = "contact",
+}: {
+  audience?: "contact" | "agency";
+}) {
+  const eventName = (action: "start" | "error" | "submit") =>
+    audience === "agency"
+      ? (`agency_form_${action}` as const)
+      : (`contact_form_${action}` as const);
   const [formState, setFormState] = useState<FormState>({
     status: "idle",
     message: "",
@@ -25,7 +33,7 @@ export function AgencyContactForm() {
     if (hasStarted.current) return;
 
     hasStarted.current = true;
-    trackAgencyEvent("agency_form_start");
+    trackEvent(eventName("start"));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -40,7 +48,7 @@ export function AgencyContactForm() {
     setFormState({ status: "submitting", message: "" });
 
     try {
-      const response = await fetch("/api/contact/agencies", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(values),
@@ -48,7 +56,7 @@ export function AgencyContactForm() {
       const result = (await response.json()) as { error?: string };
 
       if (!response.ok) {
-        trackAgencyEvent("agency_form_error", {
+        trackEvent(eventName("error"), {
           reason: response.status === 400 ? "validation" : "delivery",
         });
         setFormState({
@@ -62,13 +70,14 @@ export function AgencyContactForm() {
 
       form.reset();
       hasStarted.current = false;
-      trackAgencyEvent("agency_form_submit");
+      trackEvent(eventName("submit"));
       setFormState({
         status: "success",
-        message: "Thanks — your project details have been sent. I’ll be in touch.",
+        message:
+          "Thanks — your system details have been sent. We’ll be in touch.",
       });
     } catch {
-      trackAgencyEvent("agency_form_error", { reason: "network" });
+      trackEvent(eventName("error"), { reason: "network" });
       setFormState({
         status: "error",
         message:
@@ -83,9 +92,9 @@ export function AgencyContactForm() {
     <form
       onSubmit={handleSubmit}
       onFocusCapture={handleStart}
-      noValidate
       className="rounded-3xl border border-neutral-800 bg-neutral-950/70 p-5 sm:p-8"
     >
+      <input type="hidden" name="source" value={audience} />
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="text-sm text-neutral-300">
           Name
@@ -100,11 +109,11 @@ export function AgencyContactForm() {
         </label>
 
         <label className="text-sm text-neutral-300">
-          Agency
+          {audience === "agency" ? "Agency" : "Company / team (optional)"}
           <input
             name="agency"
             type="text"
-            required
+            required={audience === "agency"}
             autoComplete="organization"
             maxLength={120}
             className={inputClass}
@@ -135,12 +144,11 @@ export function AgencyContactForm() {
             <option value="" disabled>
               Select a project type
             </option>
-            <option value="Landing page or campaign site">Landing page or campaign site</option>
-            <option value="Business website">Business website</option>
-            <option value="Ecommerce or payments">Ecommerce or payments</option>
-            <option value="Technical rescue">Technical rescue</option>
-            <option value="Ongoing development capacity">Ongoing development capacity</option>
-            <option value="Other">Other</option>
+            {projectTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
         </label>
       </div>
@@ -153,7 +161,7 @@ export function AgencyContactForm() {
           rows={7}
           minLength={20}
           maxLength={4000}
-          placeholder="What needs to be built, what is already supplied, and where is the project currently blocked?"
+          placeholder="What is the system, what needs to work, and where is it currently blocked? Include the stack and any deadline."
           className={`${inputClass} resize-y`}
         />
       </label>
@@ -177,18 +185,26 @@ export function AgencyContactForm() {
           disabled={formState.status === "submitting"}
           className="rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-black outline-none transition hover:bg-emerald-400 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:cursor-wait disabled:opacity-60"
         >
-          {formState.status === "submitting" ? "Sending…" : "Send project details"}
+          {formState.status === "submitting"
+            ? "Sending…"
+            : "Send project details"}
         </button>
 
         <p className="text-sm text-neutral-500">
           Prefer email?{" "}
-          <TrackedAgencyLink
-            href="mailto:pawan@hexcode.au?subject=White-label%20agency%20project"
-            event="agency_email_click"
+          <a
+            href="mailto:pawan@hexcode.au?subject=Engineering%20engagement"
+            onClick={() =>
+              trackEvent(
+                audience === "agency"
+                  ? "agency_email_click"
+                  : "contact_email_click",
+              )
+            }
             className="rounded-sm text-neutral-300 underline decoration-neutral-600 underline-offset-4 outline-none transition hover:text-white focus-visible:ring-2 focus-visible:ring-emerald-500"
           >
             pawan@hexcode.au
-          </TrackedAgencyLink>
+          </a>
         </p>
       </div>
 
