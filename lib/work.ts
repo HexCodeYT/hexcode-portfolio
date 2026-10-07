@@ -14,7 +14,7 @@ export const work = [
     title: "AussieLK",
     category: "Sourcing platform",
     description:
-      "A request-based platform connecting Australian products with customers in Sri Lanka, with authentication, payment integration, request workflows and administration.",
+      "Australian products sourced for customers in Sri Lanka, with request workflows, payments and administration.",
     tags: ["Next.js", "TypeScript", "Prisma", "Stripe"],
     href: "https://aussielk.com.au",
     linkLabel: "Visit AussieLK",
@@ -24,7 +24,7 @@ export const work = [
     title: "PlainLink",
     category: "Native software · Privacy",
     description:
-      "A local macOS clipboard utility built with Rust and Swift/AppKit. Conservative, fixture-tested URL rules remove known tracking parameters while preserving unknown ones.",
+      "A macOS clipboard utility that removes known tracking parameters while preserving unknown ones. Its conservative rules are fixture-tested.",
     tags: ["Rust", "Swift", "AppKit", "GitHub Actions"],
     href: "https://github.com/HexCodeYT/PlainLink",
     linkLabel: "Explore the repository",
@@ -34,7 +34,7 @@ export const work = [
     title: "P.A.T.H.",
     category: "Research · GPU compute",
     description:
-      "Experimental prime sieving on Apple Silicon using Metal. The research summary covers architecture, validation and measured results from an M1 run.",
+      "Experimental prime sieving on Apple Silicon, with architecture, validation and measured M1 results in the research summary.",
     tags: ["Metal", "Objective-C++", "Apple Silicon"],
     href: "/research/path",
     linkLabel: "Read the research summary",

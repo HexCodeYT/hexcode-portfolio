@@ -25,7 +25,7 @@ git diff --check
 
 ## Routes and content
 
-- `/`: production-engineering positioning, Palermo proof, capabilities, latest articles and selected systems.
+- `/`: five sections: launch hook, Palermo proof, buyer situations, latest two articles and contact CTA.
 - `/work`, `/work/palermo`: selected systems and flagship case study.
 - `/engineering`, `/engineering/[slug]`: repository-native Markdown publishing.
 - `/services`, `/about`, `/contact`: practice, engagements and qualification.
@@ -49,7 +49,6 @@ canonicalUrl: "https://hexcode.au/engineering/a-specific-engineering-decision" #
 # socialImageAlt: "Description of the image" # required with socialImage
 # draft: true # excludes the article from routes, cards, related links and sitemap
 ---
-
 ## Start article sections at H2
 
 Body text, [internal links](/work/palermo), lists, and fenced code blocks.
@@ -59,7 +58,7 @@ Dates must be quoted ISO dates. Set `draft: true` while preparing content; omit 
 
 `lib/engineering.ts` validates metadata and loads published content. Related articles use the project and tags. Canonicals are derived from the article slug as `https://hexcode.au/engineering/<slug>`; optional `canonicalUrl` metadata must match that exact URL. External URLs, other paths, query strings and fragments fail publication validation, keeping HexCode the source of record when adapting an article for social distribution. `lib/work.ts` drives selected work and case-study sitemap entries; add a case-study route and catalogue entry together.
 
-The two initial engineering notes use documented Palermo boundaries. See [Palermo evidence](docs/palermo-evidence.md) for source revisions, attribution, test evidence and publication limits.
+The checkout and payment notes use documented Palermo boundaries. A third note preserves the identity, architecture and release detail relocated from the concise case study. See [Palermo evidence](docs/palermo-evidence.md) for source revisions, attribution, test evidence and publication limits.
 
 ## Contact and analytics
 

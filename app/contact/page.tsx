@@ -1,6 +1,6 @@
 import { pageMetadata } from "@/lib/site";
 import { ContactForm } from "../components/ContactForm";
-import { PageHero, sectionClass, headingClass } from "../components/Editorial";
+import { containerClass } from "../components/Editorial";
 
 export const metadata = pageMetadata(
   "Contact",
@@ -10,37 +10,21 @@ export const metadata = pageMetadata(
 
 export default function ContactPage() {
   return (
-    <main id="main-content">
-      <PageHero
-        eyebrow="Contact"
-        title="Start with the system."
-        description="Tell us what you’re building, what is failing, or what needs to be ready for launch. HexCode will assess the fit and define a project-based engagement around the work."
-      />
-      <section
-        className={`${sectionClass} grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16`}
-      >
-        <div>
-          <h2 className={headingClass}>Discuss an engineering engagement.</h2>
-          <p className="mt-6 text-base leading-8 text-neutral-400">
-            Useful context includes the stack, the current stage, the affected
-            workflow and any launch deadline. An initial description is enough
-            to start.
-          </p>
-          <p className="mt-5 text-sm leading-7 text-neutral-500">
-            Keep credentials, customer data and private configuration out of the
-            enquiry. Access can be arranged after the scope is understood.
-          </p>
-          <a
-            href="mailto:pawan@hexcode.au"
-            className="mt-8 inline-block text-emerald-400 hover:text-emerald-300"
-          >
-            pawan@hexcode.au
-          </a>
-          <p className="mt-5 text-sm text-neutral-500">
-            Melbourne, Australia · Pawan Sedara, founder & engineer
-          </p>
-        </div>
-        <ContactForm />
+    <main
+      id="main-content"
+      className={`${containerClass} pt-28 pb-12 md:pt-32`}
+    >
+      <section className="mx-auto max-w-2xl" aria-labelledby="contact-heading">
+        <h1
+          id="contact-heading"
+          className="text-3xl font-semibold tracking-tight md:text-5xl"
+        >
+          Tell us what you’re building.
+        </h1>
+        <p className="mt-4 mb-6 text-base leading-7 text-neutral-400">
+          Share what needs to work, what’s blocked and any deadline.
+        </p>
+        <ContactForm compact />
       </section>
     </main>
   );

@@ -9,7 +9,7 @@ export function ArticleCards({ articles }: { articles: Article[] }) {
       {articles.map((article) => (
         <article
           key={article.slug}
-          className="flex flex-col rounded-3xl border border-neutral-900 bg-neutral-950/40 p-7 sm:p-8"
+          className="flex flex-col border-t border-neutral-800 pt-6"
         >
           <time
             dateTime={article.publishedAt}
@@ -28,12 +28,12 @@ export function ArticleCards({ articles }: { articles: Article[] }) {
           <p className="mt-4 flex-1 text-sm leading-7 text-neutral-400">
             {article.description}
           </p>
-          <div className="mt-6">
+          <div className="mt-5">
             <Tags tags={article.tags} />
           </div>
           <Link
             href={`/engineering/${article.slug}`}
-            className={`${textLinkClass} mt-8`}
+            className={`${textLinkClass} mt-6`}
           >
             Read engineering note <span aria-hidden="true">→</span>
           </Link>

@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { pageMetadata } from "@/lib/site";
 import {
-  ContactCTA,
   PageHero,
   sectionClass,
   headingClass,
+  textLinkClass,
 } from "../components/Editorial";
 import { PalermoFeature, SelectedWork } from "../components/WorkCards";
 
@@ -17,36 +18,36 @@ export default function WorkPage() {
   return (
     <main id="main-content">
       <PageHero
+        compact
         eyebrow="Selected systems"
-        title="Work with substance."
-        description="Application architecture, commerce workflows, native tools and compute research. Start with Palermo for a detailed view of the engineering behind a substantial system."
+        title="The work behind the claims."
+        description="Start with Palermo for the difficult parts of commerce. Explore the other systems for breadth."
       />
       <section className={sectionClass} aria-label="Flagship case study">
         <PalermoFeature />
       </section>
       <section className="border-t border-neutral-900">
         <div className={sectionClass}>
-          <h2 className={`${headingClass} mb-10`}>More systems.</h2>
+          <h2 className={`${headingClass} mb-8`}>Other systems.</h2>
           <SelectedWork />
+          <div className="mt-10 border-t border-neutral-900 pt-7">
+            <h3 className="text-lg font-medium">Supporting infrastructure</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-neutral-400">
+              Self-hosted search and services, with Docker, WireGuard and Caddy,
+              support the practice’s deployment and operational work.
+            </p>
+            <a
+              href="https://github.com/HexCodeYT/privacy-search-infra"
+              className={`${textLinkClass} mt-4`}
+            >
+              Explore the infrastructure <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <Link href="/contact" className={`${textLinkClass} mt-8`}>
+            Discuss your system <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </section>
-      <section className={`${sectionClass} border-t border-neutral-900`}>
-        <h2 className="text-2xl font-medium tracking-tight">
-          Supporting infrastructure
-        </h2>
-        <p className="mt-5 max-w-3xl text-base leading-8 text-neutral-400">
-          Self-hosted services also inform the practice: Debian, Docker,
-          WireGuard, Caddy routing and firewall configuration. That operational
-          work supports application delivery and reliability.
-        </p>
-        <a
-          href="https://github.com/HexCodeYT/privacy-search-infra"
-          className="mt-6 inline-block text-sm text-emerald-400 hover:text-emerald-300"
-        >
-          Explore the search infrastructure <span aria-hidden="true">→</span>
-        </a>
-      </section>
-      <ContactCTA />
     </main>
   );
 }

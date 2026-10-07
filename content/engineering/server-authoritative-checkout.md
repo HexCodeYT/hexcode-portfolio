@@ -1,6 +1,6 @@
 ---
-title: "Why checkout must revalidate on the server"
-description: "A first engineering note from Palermo: treating the cart as intent, validating current prices and stock, and creating an order transactionally."
+title: "The cart shows a price. Who gets the final say?"
+description: "Why Palermo treats the cart as intent and checks prices, promotions and stock on the server."
 publishedAt: "2026-10-07"
 tags: ["Commerce", "Data integrity", "Architecture"]
 relatedProject: "palermo"
@@ -50,6 +50,12 @@ A customer can resubmit checkout after a delayed response or an interrupted conn
 Disabling a submit button helps the interface, but requests can repeat outside that interface. The server needs to recognise the repeated operation within its own boundary.
 
 Idempotency also has to agree with inventory and payment behaviour. Replaying order initiation is useful only if later transitions avoid repeating stock effects.
+
+## Protect inventory effects as well as requests
+
+Conditional inventory writes and unique movement references guard against repeated stock effects. Finished-product batch release is restricted to an authorised administrator.
+
+These checks connect the request boundary to the inventory model: reservations claim stock temporarily, balance changes commit it, and movements record attributable effects. The [inventory module](https://github.com/Mel-18-Palermo/Palermo-Perfume-System/blob/46133da18ac97659ce06c3411452c449178dcef4/src/modules/inventory/README.md) records the implementation.
 
 ## Keep payment confirmation separate
 
