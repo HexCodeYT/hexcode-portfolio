@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "HexCode — Software that survives production.";
+export const alt = "HexCode — Building the demo is the easy part.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,7 +38,7 @@ export default function OpenGraphImage() {
           maxWidth: 950,
         }}
       >
-        Software that survives production.
+        Building the demo is the easy part.
       </div>
       <div style={{ fontSize: 28, color: "#a3a3a3", marginTop: 40 }}>
         Build. Harden. Rescue. · hexcode.au

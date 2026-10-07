@@ -15,8 +15,10 @@ const inputClass =
 
 export function ContactForm({
   audience = "contact",
+  compact = false,
 }: {
   audience?: "contact" | "agency";
+  compact?: boolean;
 }) {
   const eventName = (action: "start" | "error" | "submit") =>
     audience === "agency"
@@ -95,7 +97,9 @@ export function ContactForm({
       className="rounded-3xl border border-neutral-800 bg-neutral-950/70 p-5 sm:p-8"
     >
       <input type="hidden" name="source" value={audience} />
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div
+        className={`grid gap-5 sm:grid-cols-2 ${compact ? "grid-cols-2" : ""}`}
+      >
         <label className="text-sm text-neutral-300">
           Name
           <input
@@ -109,7 +113,7 @@ export function ContactForm({
         </label>
 
         <label className="text-sm text-neutral-300">
-          {audience === "agency" ? "Agency" : "Company / team (optional)"}
+          {audience === "agency" ? "Agency" : "Company (optional)"}
           <input
             name="agency"
             type="text"
@@ -120,7 +124,9 @@ export function ContactForm({
           />
         </label>
 
-        <label className="text-sm text-neutral-300">
+        <label
+          className={`text-sm text-neutral-300 ${compact ? "col-span-2 sm:col-span-1" : ""}`}
+        >
           Email
           <input
             name="email"
@@ -133,7 +139,9 @@ export function ContactForm({
           />
         </label>
 
-        <label className="text-sm text-neutral-300">
+        <label
+          className={`text-sm text-neutral-300 ${compact ? "col-span-2 sm:col-span-1" : ""}`}
+        >
           Project type
           <select
             name="projectType"
@@ -142,7 +150,7 @@ export function ContactForm({
             className={inputClass}
           >
             <option value="" disabled>
-              Select a project type
+              Select a type
             </option>
             {projectTypes.map((type) => (
               <option key={type} value={type}>
@@ -158,10 +166,10 @@ export function ContactForm({
         <textarea
           name="projectDetails"
           required
-          rows={7}
+          rows={compact ? 4 : 7}
           minLength={20}
           maxLength={4000}
-          placeholder="What is the system, what needs to work, and where is it currently blocked? Include the stack and any deadline."
+          placeholder="The system, the problem and the deadline. No credentials or customer data, please."
           className={`${inputClass} resize-y`}
         />
       </label>

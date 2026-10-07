@@ -1,6 +1,6 @@
 ---
-title: "When payment succeeds after the stock reservation expires"
-description: "A first engineering note on Palermo’s payment recovery boundary: late webhooks, transactional stock claims, and explicit retries."
+title: "Stripe says paid. Can the order still be fulfilled?"
+description: "How Palermo handles payment success when the stock reservation has already expired."
 publishedAt: "2026-10-07"
 tags: ["Commerce", "Payments", "Data integrity"]
 relatedProject: "palermo"
@@ -10,6 +10,12 @@ canonicalUrl: "https://hexcode.au/engineering/late-payment-recovery"
 A payment provider and an application database do not share one transaction. A verified payment event can arrive after the application’s stock reservation has expired.
 
 Palermo’s payment boundary makes that situation explicit. This initial note describes the documented behaviour of its Stripe test-mode integration; it does not claim live commercial payment operation.
+
+## Keep the payment boundary explicit
+
+Palermo uses Stripe test-mode PaymentIntents and Stripe Elements. Card data remains within Stripe-controlled fields. Missing server payment configuration fails closed rather than silently switching to a simulated gateway.
+
+Placing an order, reserving stock and receiving payment are distinct steps. A browser return from checkout is not evidence that the payment completed.
 
 ## A verified event still needs valid application state
 

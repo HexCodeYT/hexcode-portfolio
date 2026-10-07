@@ -1,37 +1,32 @@
 import Link from "next/link";
 import { work } from "@/lib/work";
-import { eyebrowClass, textLinkClass } from "./Editorial";
+import { eyebrowClass, headingClass, textLinkClass } from "./Editorial";
 
 export function PalermoFeature() {
-  const project = work[0];
   return (
-    <article className="grid gap-10 rounded-3xl border border-emerald-500/25 bg-neutral-950/50 p-7 shadow-[inset_0_1px_0_rgba(16,185,129,0.08)] sm:p-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+    <article className="grid gap-8 rounded-3xl border border-emerald-500/25 bg-neutral-950/50 p-7 shadow-[inset_0_1px_0_rgba(16,185,129,0.08)] sm:p-10 lg:grid-cols-[1.3fr_0.7fr] lg:gap-12">
       <div>
-        <p className={eyebrowClass}>Flagship case study</p>
-        <h2 className="mt-5 text-4xl font-semibold tracking-tight md:text-6xl">
-          Palermo
+        <p className={eyebrowClass}>Palermo · Flagship case study</p>
+        <h2 className={`${headingClass} mt-5`}>
+          What if payment succeeds after the stock reservation expires?
         </h2>
-        <p className="mt-5 max-w-xl text-lg leading-8 text-neutral-400">
-          Commerce engineering beyond the storefront. Identity, permissions,
-          transactional checkout, payment recovery and inventory in one coherent
-          system.
+        <p className="mt-5 max-w-2xl text-base leading-8 text-neutral-400">
+          Palermo is a commerce system engineered around problems like this —
+          beyond the happy-path storefront.
         </p>
-        <Link href="/work/palermo" className={`${textLinkClass} mt-8`}>
+        <Link href="/work/palermo" className={`${textLinkClass} mt-7`}>
           Read the case study <span aria-hidden="true">→</span>
         </Link>
       </div>
-      <div className="flex flex-col justify-between gap-8 border-t border-neutral-800 pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
+      <div className="flex flex-col justify-center border-t border-neutral-800 pt-7 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
         <ul className="space-y-4 text-sm leading-6 text-neutral-300">
-          <li>Server-owned prices, stock and payment outcomes</li>
-          <li>Sessions, RBAC and administrator passkeys</li>
-          <li>Unit, database and browser regression coverage</li>
+          <li>346 passing tests in the recorded release CI</li>
+          <li>Payment and inventory recovery</li>
+          <li>Account permissions and administrator passkeys</li>
         </ul>
-        <div>
-          <Tags tags={project.tags} />
-          <p className="mt-5 text-xs leading-6 text-neutral-500">
-            Controlled Vercel demonstration · Synthetic data · Stripe test mode
-          </p>
-        </div>
+        <p className="mt-6 text-xs leading-6 text-neutral-500">
+          Controlled demonstration · Synthetic data · Stripe test mode
+        </p>
       </div>
     </article>
   );
@@ -63,17 +58,17 @@ export function SelectedWork() {
           <p className="text-xs leading-5 text-neutral-500">
             {project.category}
           </p>
-          <h3 className="mt-5 text-2xl font-medium tracking-tight">
+          <h3 className="mt-4 text-2xl font-medium tracking-tight">
             {project.title}
           </h3>
           <p className="mt-4 flex-1 text-sm leading-7 text-neutral-400">
             {project.description}
           </p>
-          <div className="mt-6">
+          <div className="mt-5">
             <Tags tags={project.tags} />
           </div>
           {"href" in project && (
-            <Link href={project.href} className={`${textLinkClass} mt-8`}>
+            <Link href={project.href} className={`${textLinkClass} mt-6`}>
               {project.linkLabel} <span aria-hidden="true">→</span>
             </Link>
           )}

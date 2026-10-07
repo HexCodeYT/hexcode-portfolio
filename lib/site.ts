@@ -26,7 +26,7 @@ export function pageMetadata(
           url: "/opengraph-image",
           width: 1200,
           height: 630,
-          alt: "HexCode — Software that survives production.",
+          alt: "HexCode — Building the demo is the easy part.",
         },
       ],
     },
