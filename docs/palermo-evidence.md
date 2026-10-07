@@ -2,7 +2,7 @@
 
 Reviewed 7 October 2026. Public source: `Mel-18-Palermo/Palermo-Perfume-System`, documentation revision `46133da18ac97659ce06c3411452c449178dcef4`. Frozen application baseline: `3ac1b426e965f52627a884475b52c6a624f76c85`.
 
-An initial discovery of the private `HexCodeYT/Palermo-Cinematic-Lab` fork led to the canonical public repository. Published claims use the canonical repository; no private fork URL, credential, demo password, connection value, customer record or private configuration is included.
+Published claims use the canonical public repository. No private repository link, credential, demo password, connection value, customer record or private configuration is included.
 
 All paths below are relative to the canonical repository at the reviewed revision:
 https://github.com/Mel-18-Palermo/Palermo-Perfume-System/tree/46133da18ac97659ce06c3411452c449178dcef4
